@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Monkey.js Demo</title>
+
+    <style>
+      #area {
+        width: 500px;
+        padding: 20px;
+        margin: 20px;
+        border: 1px solid orange;
+      }
+
+      .row, input {
+        margin-top: 20px;
+      }
+
+      span {
+        border: 1px solid #999;
+        padding: 5px;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="area">
+      <textarea type="text" id="area-text"></textarea>
+
+      <div class="row">
+        <button>1-1</button> <button>1-2</button> <button>1-3</button>
+        <button>1-4</button> <button>1-5</button> <button>1-6</button>
+      </div>
+
+      <input type="text"></input>
+
+      <div class="row">
+        <button>2-1</button> <button>2-2</button> <button>2-3</button>
+        <button>2-4</button> <button>2-5</button> <button>2-6</button>
+      </div>
+
+      <input type="text"></input>
+
+      <div class="row">
+        <button>3-1</button> <button>3-2</button> <button>3-3</button>
+        <button>3-4</button> <button>3-5</button> <button>3-6</button>
+      </div>
+
+      <input type="text"></input>
+    </div>
+
+    <div>
+      <span onclick="m0.reset();m0.play()">Click Play</span>
+      <span onclick="m0.replay()">Click Replay</span>
+      <span onclick="m1.reset();m1.play()">Restricted Click Play</span>
+      <span onclick="m1.replay()">Restricted Click Replay</span>
+      <span onclick="m2.reset();m2.play()">Type Play</span>
+    </div>
+
+    <script>
+      (function() {
+        var area = document.getElementById("area"),
+            text = document.getElementById("area-text");
+
+        area.addEventListener("click", function(e) {
+          text.value += "!";
+        });
+      })();
+    </script>
+
+    <script src="../src/monkey.js"></script>
+    <script>
+      // random click in page
+      var m0 = new Monkey({ cycles: 50 })
+      m0.behaviour(new ClickBehaviour().getHandler())
+      // restricted random click
+      var m1 = new Monkey({ element: document.getElementById("area") });
+      m1.behaviour(new ClickBehaviour().getHandler())
+      // random type
+      var m2 = new Monkey().behaviour(new TypeBehaviour().getHandler());
+    </script>
+  </body>
+</html>
