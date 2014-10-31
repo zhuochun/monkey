@@ -4,7 +4,7 @@ _Naughty monkeys playing on your pages._
 
 [Monkey.js](https://github.com/zhuochun/monkey) is a simple [monkey testing](http://en.wikipedia.org/wiki/Monkey_test) library for web pages.
 
-It is inspired by [gremlins.js](https://github.com/marmelab/gremlins.js). Monkey.js is simpler, supports restricted test DOM and replay.
+It is inspired by [gremlins.js](https://github.com/marmelab/gremlins.js). However, Monkey.js is simpler, supports restricting DOM element for test and replay the actions.
 
 ## Usage
 
@@ -20,7 +20,22 @@ Create a naughty monkey:
 </script>
 ```
 
-Add a custom behaviour:
+Fastest way to have a monkey on a page, open `Developer Tool`, copy and paste the following:
+
+```js
+function loadJS(src, cb) {
+    var doc = document, tag = "script", script = doc.createElement(tag), ref = doc.getElementsByTagName(tag)[0];
+    script.async = 1; script.src = src;
+    ref.parentNode.insertBefore(script, ref);
+    script.onload = cb;
+}
+
+loadJS('https://raw.githubusercontent.com/zhuochun/monkey/master/src/monkey.js', function() {
+  var monkey = new Monkey().behaviour(new ClickBehaviour().getHandler()); monkey.play();
+});
+```
+
+To create a custom behaviour:
 
 ```js
 var monkey = new Monkey();
