@@ -30,7 +30,7 @@ function loadJS(src, cb) {
     script.onload = cb;
 }
 
-loadJS('https://raw.githubusercontent.com/zhuochun/monkey/master/src/monkey.js', function() {
+loadJS('https://cdn.rawgit.com/zhuochun/monkey/master/src/monkey.js', function() {
   var monkey = new Monkey().behaviour(new ClickBehaviour().getHandler()); monkey.play();
 });
 ```
